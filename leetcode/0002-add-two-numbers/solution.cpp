@@ -11,41 +11,56 @@
 class Solution {
 public:
     ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
-        stack<int>s3;
-       
-        int n1 , n2 ,n3 = 0;
-        while(l1!= nullptr || l2!= nullptr){
-            
-            if(l1!= nullptr){
-                n1 = l1 -> val;
+        ListNode* t1 = new ListNode(0 , l1);
+        ListNode* t2 = new ListNode(0, l2);
+        l1 = t1;
+        l2 = t2;
+        int carry = 0;
+        while(l1 -> next != nullptr && l2 -> next != nullptr){
+            int temp = l1 -> next -> val + l2 -> next -> val + carry;
+            l1 -> next -> val = temp % 10;
+            l2 -> next -> val = temp % 10;
+            carry = temp / 10;
+            l1 = l1 -> next;
+            l2 = l2 -> next;
+        }
+        if(l1 -> next != nullptr){  
+            while(l1 -> next != nullptr){
+                int temp = l1 -> next -> val + carry;
+                l1 -> next -> val = temp %10;
+                carry = temp /10;
                 l1 = l1 -> next;
             }
-            else{
-                n1 = 0;
-            }
-            if(l2 != nullptr){
-                n2 = l2 -> val;
+            while(carry != 0){
+                        ListNode* t = new ListNode(carry%10);
+                        l1 -> next = t;
+                        carry /= 10;
+                        l1 = l1 -> next;
+                    }
+            return t1 -> next;
+        }
+        if(l2 -> next != nullptr){
+            while(l2 -> next != nullptr){
+                int temp = l2 -> next -> val + carry;
+                l2 -> next -> val = temp % 10;
+                carry = temp / 10;
                 l2 = l2 -> next;
             }
-            else{
-                n2 = 0;
-            }
-            n3 = n1+n2+n3;
-            s3.push(n3%10);
-            n3/=10;
+            while(carry != 0){
+                        ListNode* t = new ListNode(carry%10);
+                        l2 -> next = t;
+                        carry /= 10;
+                        l2 = l2 -> next;
+                    }
+            return t2 -> next;
+
         }
-        while(n3!= 0){
-            s3.push(n3%10);
-            n3/=10;
+        while(carry != 0){
+            ListNode* t = new ListNode(carry%10);
+            l1 -> next = t;
+            carry /= 10;
+            l1 = l1 -> next;
         }
-        ListNode* head = new ListNode(s3.top());
-        s3.pop();
-        while(!s3.empty()){
-            ListNode* temp = new ListNode(s3.top());
-            s3.pop();
-            temp -> next = head;
-            head = temp;
-        }
-        return head;
+        return t1 -> next;
     }
 };
