@@ -1,5 +1,3 @@
-# My LeetCode Progress
+## LeetCode Stats
 
-# My LeetCode Progress
-
-![LeetCode Stats](https://<service-url>/vidhit001)
+![LeetCode Stats](https://leetcode-stats.vercel.app/api?username=vidhit001&theme=dark)
